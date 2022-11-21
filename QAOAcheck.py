@@ -212,8 +212,8 @@ def general_graph_pattern_sycamore(row, column, qc_res, dG, mapping):
             cx_cycle_syca(
                 row, column, qc_res, physcial_logical, G, all_cx_locations, layer, unit
             )
-            if len(G.edges()) == totaln - column*column:
-                break
+            # if len(G.edges()) == totaln - column * column:
+            #     break
             swap_cycle_syca(row, column, qc_res, physcial_logical, G, layer)
             layer += 1
         while layer < column * 2:
@@ -222,8 +222,8 @@ def general_graph_pattern_sycamore(row, column, qc_res, dG, mapping):
             cx_cycle_syca(
                 row, column, qc_res, physcial_logical, G, all_cx_locations, layer, unit
             )
-            if len(G.edges()) == totaln - column*column:
-                break
+            # if len(G.edges()) == totaln - column * column:
+            #     break
             swap_cycle_syca(row, column, qc_res, physcial_logical, G, layer)
             layer += 1
         # if unit == row / 2 - 1:
@@ -233,37 +233,37 @@ def general_graph_pattern_sycamore(row, column, qc_res, dG, mapping):
 
     offset_line = 0
     #!  we need to deal with intra cx and swap using the linear_pattern
-    line_index = 0
-    linear_list = []
-    for i in range(column):
-        linear_list.append(i)
-        linear_list.append(i + column)
-    print(linear_list)
-    if len(G.edges()) > 0:
-        for i in range(0, row, 2):
-            # print(f"the offset is {offset_line}")
-            line_index = 0
-            while line_index < column:
-                # print("intra work")
-                cx_cycle_line_syca(
-                    linear_list,
-                    0,
-                    column * 2,
-                    qc_res,
-                    physcial_logical,
-                    G,
-                    all_cx_locations,
-                    line_layer,
-                )
-                swap_cycle_line_syca(
-                    linear_list, 0, column * 2, qc_res, physcial_logical, G
-                )
-                line_index += 1
-                line_layer += 1
-        # offset_line += column * 2
-        # print(f"remain {len(G.edges())} edges")
+    # line_index = 0
+    # linear_list = []
+    # for i in range(column):
+    #     linear_list.append(i)
+    #     linear_list.append(i + column)
+    # print(linear_list)
+    # if len(G.edges()) > 0:
+    #     for i in range(0, row, 2):
+    #         # print(f"the offset is {offset_line}")
+    #         line_index = 0
+    #         while line_index < column:
+    #             # print("intra work")
+    #             cx_cycle_line_syca(
+    #                 linear_list,
+    #                 0,
+    #                 column * 2,
+    #                 qc_res,
+    #                 physcial_logical,
+    #                 G,
+    #                 all_cx_locations,
+    #                 line_layer,
+    #             )
+    #             swap_cycle_line_syca(
+    #                 linear_list, 0, column * 2, qc_res, physcial_logical, G
+    #             )
+    #             line_index += 1
+    #             line_layer += 1
+    # offset_line += column * 2
+    # print(f"remain {len(G.edges())} edges")
 
-        # #print(type(qc_res))
+    # #print(type(qc_res))
     # print(f"remain {len(G.edges())} edges")
 
     return qc_res, physcial_logical, all_cx_locations, unit_inter_gate_locations
@@ -1634,7 +1634,7 @@ def main():
         print(qc.count_ops())
         print(qc.depth())
 
-        edges_n = row_number * (row_number * 2 - 1)
+        edges_n = row_number * row_number
         print(edges_n)
         counts = qc.count_ops()["rzz"]
         if counts != edges_n:
