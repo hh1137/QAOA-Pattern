@@ -1574,6 +1574,12 @@ def main():
         help="2 * n pattern",
     )
     parser.add_argument(
+        "--output",
+        type=bool,
+        default=False,
+        help="Output Schedule",
+    )
+    parser.add_argument(
         "--arch",
         type=str,
         default="syca",
@@ -1588,9 +1594,11 @@ def main():
     res_sum = {}
     # n=5
     # qc = run_program(n)
+    
     args = parser.parse_args()
     path_str = args.path
     check = args.check
+    output = args.output
     arch = args.arch
     row_number = args.number
     if arch == 'syca':
@@ -1604,7 +1612,9 @@ def main():
     # qc2 = run_program_hh(row_number)
     if check:
         print('start check the correctness')
-        #print(qc.count_ops())
+        print(qc.count_ops())
+        print(qc.depth())
+
         edges_n = row_number*(row_number*2-1)
         print(edges_n)
         counts = qc.count_ops()['rzz']
@@ -1613,6 +1623,11 @@ def main():
         else:
             print(f'we finish generating {arch} architecture')
             print(f'There are in total {edges_n} edges of graph, which matches {counts} rzz gates')
+    if output:
+        print('Output the circuit scheduling')
+        qc_qasm = qc.qasm()
+        with open('output.qasm','w+') as f:
+            f.writelines(qc_qasm)
     # print(qc.count_ops())
 
     # print(row_number)
