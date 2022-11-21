@@ -1603,12 +1603,7 @@ def main():
         default=False,
         help="Output Schedule",
     )
-    parser.add_argument(
-        "--arch",
-        type=str,
-        default="syca",
-        help="architecture design",
-    )
+
     parser.add_argument(
         "--size",
         type=str,
@@ -1623,17 +1618,11 @@ def main():
     path_str = args.path
     check = args.check
     output = args.output
-    arch = args.arch
+    # arch = args.arch
     row_number = args.number
     edges_n = row_number * row_number
-    if arch == "syca":
-        qc = run_program(row_number)
-    elif arch == "heavyhex":
-        edges_n = row_number * (2 * row_number - 1)
-        qc = run_program_hh(row_number)
-    else:
-        print("error, we do not have this machine")
-        return
+    qc = run_program(row_number)
+
     # qc = run_program(row_number)
     # qc2 = run_program_hh(row_number)
     if check:
@@ -1646,7 +1635,7 @@ def main():
         if counts != edges_n:
             print("We find errors, the rzz gates not match the edges of graph")
         else:
-            print(f"we finish generating {arch} architecture")
+            print(f"we finish generating Syacmore architecture")
             print(
                 f"There are in total {edges_n} edges of graph, which matches {counts} rzz gates"
             )
