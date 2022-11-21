@@ -1397,13 +1397,18 @@ def run_program_hh(nrow):
     # row = 2
     # column = nrow
     # GG, num = read_graph(f"{cur_path}")
+    # ro = 1
+    # co = 1
+    # column = 4 * co + 3
+    # row = 2 * ro + 1
+    # num = get_size(row, column, ro, co)
+    # print(num)
+    flag = True
     ro = 1
     co = 1
     column = 4 * co + 3
     row = 2 * ro + 1
     num = get_size(row, column, ro, co)
-    # print(num)
-    flag = True
     while num < len(GG.nodes):
         if flag:
             ro += 1
@@ -1620,9 +1625,11 @@ def main():
     output = args.output
     arch = args.arch
     row_number = args.number
+    edges_n = row_number * row_number
     if arch == "syca":
         qc = run_program(row_number)
     elif arch == "heavyhex":
+        edges_n = row_number * (2 * row_number - 1)
         qc = run_program_hh(row_number)
     else:
         print("error, we do not have this machine")
@@ -1634,7 +1641,6 @@ def main():
         print(qc.count_ops())
         print(qc.depth())
 
-        edges_n = row_number * row_number
         print(edges_n)
         counts = qc.count_ops()["rzz"]
         if counts != edges_n:
