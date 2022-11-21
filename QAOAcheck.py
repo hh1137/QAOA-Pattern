@@ -63,7 +63,7 @@ def get_2D_layout(GG, row, column, cm):
             coupling_map=cpp,
         )
 
-    print(f"done initial")
+    # print(f"done initial")
     # qc_t = transpile(qc,layout_method="dense",coupling_map=cpp)
     # print(f"by using the sabre layout, we only need {qc_t.count_ops()}")
     for i in qc_t._layout.get_physical_bits():
@@ -92,16 +92,16 @@ def cx_cycle_line_syca(
             if G.has_edge(Logical_c, Logical_t):
                 qaoa_circuit.rzz(0, linear_list[i], linear_list[i + 1])
                 all_cx_locations[(Logical_c, Logical_t)] = -layer
-                print(
-                    f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are ({linear_list[i]},{linear_list[i+1]})"
-                )
+                # print(
+                #     f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are ({linear_list[i]},{linear_list[i+1]})"
+                # )
                 G.remove_edge(Logical_c, Logical_t)
             if G.has_edge(Logical_t, Logical_c):
                 qaoa_circuit.rzz(0, linear_list[i], linear_list[i + 1])
                 all_cx_locations[(Logical_t, Logical_c)] = -layer
-                print(
-                    f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are  ({linear_list[i]},{linear_list[i+1]})"
-                )
+                # print(
+                #     f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are  ({linear_list[i]},{linear_list[i+1]})"
+                # )
                 G.remove_edge(Logical_t, Logical_c)
     for i in range(num_qubit):
         if i % 2 != 0 and i + 1 < num_qubit:
@@ -111,17 +111,17 @@ def cx_cycle_line_syca(
             if G.has_edge(Logical_c, Logical_t):
                 all_cx_locations[(Logical_c, Logical_t)] = -layer
                 qaoa_circuit.rzz(0, linear_list[i], linear_list[i + 1])
-                print(
-                    f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are ({i},{i+1})"
-                )
+                # print(
+                #     f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are ({i},{i+1})"
+                # )
 
                 G.remove_edge(Logical_c, Logical_t)
             if G.has_edge(Logical_t, Logical_c):
                 qaoa_circuit.rzz(0, linear_list[i], linear_list[i + 1])
                 all_cx_locations[(Logical_t, Logical_c)] = -layer
-                print(
-                    f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are ({i},{i+1})"
-                )
+                # print(
+                #     f"we finsh logical cx({Logical_c},{Logical_t}) which in physical are ({i},{i+1})"
+                # )
 
                 G.remove_edge(Logical_t, Logical_c)
     return qaoa_circuit
@@ -147,7 +147,7 @@ def swap_cycle_line_syca(linear_list, offset, num_qubit, qaoa_circuit, p2l, G):
             Logical_c = p2l[linear_list[i]]
             Logical_t = p2l[linear_list[i + 1]]
             qaoa_circuit.swap(linear_list[i], linear_list[i + 1])
-            print(f"Add swap between {linear_list[i]} and {linear_list[i+1]}")
+            # print(f"Add swap between {linear_list[i]} and {linear_list[i+1]}")
             update_map(p2l, linear_list[i], linear_list[i + 1])
             # print(f"new l2p {l2p}")
 
@@ -157,7 +157,7 @@ def swap_cycle_line_syca(linear_list, offset, num_qubit, qaoa_circuit, p2l, G):
             Logical_t = p2l[linear_list[i + 1]]
 
             qaoa_circuit.swap(linear_list[i], linear_list[i + 1])
-            print(f"Add swap between {linear_list[i]} and {linear_list[i+1]}")
+            # print(f"Add swap between {linear_list[i]} and {linear_list[i+1]}")
             update_map(p2l, linear_list[i], linear_list[i + 1])
 
     return qaoa_circuit
@@ -188,7 +188,7 @@ def general_graph_pattern_sycamore(row, column, qc_res, dG, mapping):
     totaln = len(G.edges())
     line_layer = 0
     while unit < row / 2 and len(G.edges()) > 0:
-        print(unit)
+        # print(unit)
         save_p2l = physcial_logical.copy()
         save_l2p = {v: k for k, v in save_p2l.items()}
         temp_dic = []
@@ -197,9 +197,9 @@ def general_graph_pattern_sycamore(row, column, qc_res, dG, mapping):
             t = save_l2p[edge[1]]
             c_r = np.floor(c / column)
             t_r = np.floor(t / column)
-            print(
-                f"physical qubits are{c},{t} in layer {c_r} and {t_r} logical qubits are {edge[0]},{edge[1]}"
-            )
+            # print(
+            #     f"physical qubits are{c},{t} in layer {c_r} and {t_r} logical qubits are {edge[0]},{edge[1]}"
+            # )
             if abs(c_r - t_r) == 1:
                 temp_dic.append([c, t])
         unit_inter_gate_locations.append(temp_dic)
@@ -1493,7 +1493,7 @@ def run_program(nrow):
     # for p in res_list:
     #     dis_g.add_edge(p[0], p[1])
     # sp = dict(nx.all_pairs_shortest_path_length(dis_g))
-    print(res_list)
+    # print(res_list)
     cm = CouplingMap(res_list)
     # current_initial_layout, relayout = get_2D_layout(GG, row, column, cm)
     current_initial_layout = [i for i in range(row * column)]
@@ -1512,7 +1512,7 @@ def run_program(nrow):
         unit_inter_gate_locations,
     ) = general_graph_pattern_sycamore(row, column, qaoa_circuit, GG, physcial_logical)
 
-    print("we use this")
+    # print("we use this")
     return qc
     # GG, num = read_graph(cur_path)
     # num = row * column
@@ -1627,10 +1627,10 @@ def main():
     # qc2 = run_program_hh(row_number)
     if check:
         print("start check the correctness")
-        print(qc.count_ops())
-        print(qc.depth())
+        # print(qc.count_ops())
+        # print(qc.depth())
 
-        print(edges_n)
+        # print(edges_n)
         counts = qc.count_ops()["rzz"]
         if counts != edges_n:
             print("We find errors, the rzz gates not match the edges of graph")
