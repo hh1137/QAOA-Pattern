@@ -15,5 +15,5 @@ All the parameter are followings:
 
 '--check' which invoke the correctness check of the program, default is False
 
-
+'--output' which invoke the output qasm file if set True, default is False
 
