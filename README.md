@@ -1,19 +1,18 @@
-# QAOA-Pattern generate and correctness check
-
+# QAOA-Pattern generator and correctness check
+This generator produces the pattern of compiling bipartite all-to-all interactions at 2xUnits Google Sycamore architectures.
 
 ## Dependencies
-Building this software requires `Qiskit`
+Building this software requires `Qiskit`, Version `0.34.2`
 
-## Usage and parameter
-To use the QAOA-Pattern generate, use the `python QAOAcheck.py`
+## Usage and parameters
+To use the QAOA-Pattern generator, use the `python QAOAcheck.py` or `python QAOAcheck.py --number 4 --output True --check True`
 
 All the parameter are followings:
 
-'--number' which indicates the 2*n QAOA clique problem graph for example you can use 'python QAOAcheck.py --number 5` to inidicate a QAOA 10 clique program graph
+'--number n' indicates the input QAOA problem graph is a bipartite clique graph with 2n vertices. For example you can use 'python QAOAcheck.py --number 5` to inidicate a QAOA-10 bipartite clique program graph. n has to be larger than 2. 
 
-'--arch' which indicates the architecture we choose, we can either choose architecture heavyhex as 'heavyhex' and sycamore as 'syca'.
 
-'--check' which invoke the correctness check of the program, default is False
+'--check' invokes the correctness check of the program if this set as `True`, the default is `False`.
 
-'--output' which invoke the output qasm file if set True, default is False
+'--output' invokes the output qasm file if this set as `True`, the default is `False`.
 
